@@ -168,26 +168,54 @@ class _MainPageState extends State<MainPage> {
                   Text('실제로 사용하는 Futurebuilder 예제',style: TextStyle(fontSize: 16),),
                 ],
               ),
-              FutureBuilder(
-              future: futurebuilder2(),
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                if (snapshot.hasData == false) {
-                  return CircularProgressIndicator();
-                }
-                //error가 발생하게 될 경우 반환하게 되는 부분
-                else if (snapshot.hasError) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  );
-                }else{
-                    return Text("");
-                }
-              }),
-
+              SizedBox(height: 30,),
+              Text("만원으로 살 수 있는 주식"),
+              SizedBox(
+                height: 600,
+                child: FutureBuilder(
+                    future: futurebuilder2(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot){
+                      if (snapshot.hasData == false) {
+                        return const SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Center(child: CircularProgressIndicator()));
+                      }
+                      //error가 발생하게 될 경우 반환하게 되는 부분
+                      else if (snapshot.hasError) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Error: ${snapshot.error}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        );
+                      }else{
+                        List<ExModel> data = snapshot.data;
+                        return ListView.separated(
+                          // padding: EdgeInsets.zero,
+                          separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                ListTile(
+                                  onTap: (){},
+                                  title: Container(
+                                    alignment: Alignment.centerLeft,
+                                    height: 50,
+                                    child: Text(data[index].stockName, textAlign: TextAlign.start,),
+                                  ),
+                                ),
+                                Divider(),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }),
+              ),
             ],
           ),
         ),
