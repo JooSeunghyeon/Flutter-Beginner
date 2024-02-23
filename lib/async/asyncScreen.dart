@@ -124,7 +124,7 @@ class _MainPageState extends State<MainPage> {
                           setState(() {});
                         });
                       },
-                      child: Text("await 사요하는 함수")),
+                      child: Text("await 사용하는 함수")),
                   Text(getUserText2),
                 ],
               ),
@@ -214,7 +214,7 @@ class _MainPageState extends State<MainPage> {
                           },
                         );
                       }
-                    }),
+                    })
               ),
             ],
           ),
